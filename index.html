@@ -1,0 +1,38 @@
+---
+layout: default
+title: Home
+---
+
+<div class="posts">
+  {% for post in paginator.posts %}
+    <article class="post">
+      <h2 class="title"><a class="title" href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h2>
+			<h4 class="timestamp">#<time class="more" datetime="{{ post.date | date_to_xmlschema }}" class="post-date">{{ post.date | date_to_string }}</time></h4>
+      <div class="entry" style="margin-left: 28px;">
+				{% if post.content contains '<!--more-->' %}
+				    {{ post.excerpt }}
+						<p>
+			      	<a class="more" href="{{ site.baseurl }}{{ post.url }}" class="read-more">&lt;Read More&gt;</a>
+						</p>
+				{% else %}
+				    {{ post.content }}
+				{% endif %}
+      </div>
+    </article>
+  {% endfor %}
+</div>
+
+<!-- Pagination links -->
+<div class="pagination">
+  {% if paginator.next_page %}
+    <a href="{{ paginator.next_page_path }}" class="next"> &lt; Older</a>
+  {% else %}
+    <span class="next ">| Older</span>
+  {% endif %}
+	|
+  {% if paginator.previous_page %}
+    <a href="{{ paginator.previous_page_path }}" class="previous">Newer &gt;</a>
+  {% else %}
+    <span class="previous">Newer |</span>
+  {% endif %}
+</div>

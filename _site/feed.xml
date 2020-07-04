@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.5.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2017-10-01T15:51:42-05:00</updated><id>http://localhost:4000/</id><title type="html">Untitled Industries</title><subtitle>Absent Input &gt;  code, documentation, and ramblings from my daily escapades</subtitle><entry><title type="html">Testing Chart.js</title><link href="http://localhost:4000/Testing-Chart.js/" rel="alternate" type="text/html" title="Testing Chart.js" /><published>2017-10-01T00:00:00-05:00</published><updated>2017-10-01T00:00:00-05:00</updated><id>http://localhost:4000/Testing-Chart.js</id><content type="html" xml:base="http://localhost:4000/Testing-Chart.js/">&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;http://www.chartjs.org/dist/2.7.0/Chart.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;http://www.chartjs.org/samples/latest/utils.js&quot;&gt;&lt;/script&gt;
+&lt;canvas id=&quot;canvas&quot;&gt;&lt;/canvas&gt;
+	&lt;br&gt;
+	&lt;br&gt;
+	&lt;button id=&quot;randomizeData&quot;&gt;Randomize Data&lt;/button&gt;
+	&lt;button id=&quot;addDataset&quot;&gt;Add Dataset&lt;/button&gt;
+	&lt;button id=&quot;removeDataset&quot;&gt;Remove Dataset&lt;/button&gt;
+	&lt;button id=&quot;addData&quot;&gt;Add Data&lt;/button&gt;
+	&lt;button id=&quot;removeData&quot;&gt;Remove Data&lt;/button&gt;
+	&lt;script&gt;
+		var timeFormat = 'MM/DD/YYYY HH:mm';
+
+		function newDate(days) {
+			return moment().add(days, 'd').toDate();
+		}
+
+		function newDateString(days) {
+			return moment().add(days, 'd').format(timeFormat);
+		}
+
+		function newTimestamp(days) {
+			return moment().add(days, 'd').unix();
+		}
+
+		var color = Chart.helpers.color;
+		var config = {
+			type: 'line',
+			data: {
+				labels: [ // Date Objects
+					newDate(0),
+					newDate(1),
+					newDate(2),
+					newDate(3),
+					newDate(4),
+					newDate(5),
+					newDate(6)
+				],
+				datasets: [{
+					label: &quot;My First dataset&quot;,
+					backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
+					borderColor: window.chartColors.red,
+					fill: false,
+					data: [
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor()
+					],
+				}, {
+					label: &quot;My Second dataset&quot;,
+					backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
+					borderColor: window.chartColors.blue,
+					fill: false,
+					data: [
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor()
+					],
+				}, {
+					label: &quot;Dataset with point data&quot;,
+					backgroundColor: color(window.chartColors.green).alpha(0.5).rgbString(),
+					borderColor: window.chartColors.green,
+					fill: false,
+					data: [{
+						x: newDateString(0),
+						y: randomScalingFactor()
+					}, {
+						x: newDateString(5),
+						y: randomScalingFactor()
+					}, {
+						x: newDateString(7),
+						y: randomScalingFactor()
+					}, {
+						x: newDateString(15),
+						y: randomScalingFactor()
+					}],
+				}]
+			},
+			options: {
+                title:{
+                    text: &quot;Chart.js Time Scale&quot;
+                },
+				scales: {
+					xAxes: [{
+						type: &quot;time&quot;,
+						time: {
+							format: timeFormat,
+							// round: 'day'
+							tooltipFormat: 'll HH:mm'
+						},
+						scaleLabel: {
+							display: true,
+							labelString: 'Date'
+						}
+					}, ],
+					yAxes: [{
+						scaleLabel: {
+							display: true,
+							labelString: 'value'
+						}
+					}]
+				},
+			}
+		};
+
+		window.onload = function() {
+			var ctx = document.getElementById(&quot;canvas&quot;).getContext(&quot;2d&quot;);
+			window.myLine = new Chart(ctx, config);
+
+		};
+
+		document.getElementById('randomizeData').addEventListener('click', function() {
+			config.data.datasets.forEach(function(dataset) {
+				dataset.data.forEach(function(dataObj, j) {
+					if (typeof dataObj === 'object') {
+						dataObj.y = randomScalingFactor();
+					} else {
+						dataset.data[j] = randomScalingFactor();
+					}
+				});
+			});
+
+			window.myLine.update();
+		});
+
+		var colorNames = Object.keys(window.chartColors);
+		document.getElementById('addDataset').addEventListener('click', function() {
+			var colorName = colorNames[config.data.datasets.length % colorNames.length];
+			var newColor = window.chartColors[colorName]
+			var newDataset = {
+				label: 'Dataset ' + config.data.datasets.length,
+				borderColor: newColor,
+				backgroundColor: color(newColor).alpha(0.5).rgbString(),
+				data: [],
+			};
+
+			for (var index = 0; index &lt; config.data.labels.length; ++index) {
+				newDataset.data.push(randomScalingFactor());
+			}
+
+			config.data.datasets.push(newDataset);
+			window.myLine.update();
+		});
+
+		document.getElementById('addData').addEventListener('click', function() {
+			if (config.data.datasets.length &gt; 0) {
+				config.data.labels.push(newDate(config.data.labels.length));
+
+				for (var index = 0; index &lt; config.data.datasets.length; ++index) {
+					if (typeof config.data.datasets[index].data[0] === &quot;object&quot;) {
+						config.data.datasets[index].data.push({
+							x: newDate(config.data.datasets[index].data.length),
+							y: randomScalingFactor(),
+						});
+					} else {
+						config.data.datasets[index].data.push(randomScalingFactor());
+					}
+				}
+
+				window.myLine.update();
+			}
+		});
+
+		document.getElementById('removeDataset').addEventListener('click', function() {
+			config.data.datasets.splice(0, 1);
+			window.myLine.update();
+		});
+
+		document.getElementById('removeData').addEventListener('click', function() {
+			config.data.labels.splice(-1, 1); // remove the label first
+
+			config.data.datasets.forEach(function(dataset, datasetIndex) {
+				dataset.data.pop();
+			});
+
+			window.myLine.update();
+		});
+	&lt;/script&gt;</content><author><name></name></author><category term="[&quot;Demo&quot;]" /><category term="Code" /><category term="Jekyll" /><category term="Chart.js" /><summary type="html">Randomize Data Add Dataset Remove Dataset Add Data Remove Data</summary></entry><entry><title type="html">Highlighting XML Code Test</title><link href="http://localhost:4000/highlight-test-xml/" rel="alternate" type="text/html" title="Highlighting XML Code Test" /><published>2017-09-18T14:46:00-05:00</published><updated>2017-09-18T14:46:00-05:00</updated><id>http://localhost:4000/highlight-test-xml</id><content type="html" xml:base="http://localhost:4000/highlight-test-xml/">&lt;p&gt;Testing out if xml syntax has issues.
+&lt;!--more--&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;&amp;lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;plist&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;version=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;1.0&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;dict&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;PayloadContent&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;array&amp;gt;&lt;/span&gt;
+		&lt;span class=&quot;nt&quot;&gt;&amp;lt;dict&amp;gt;&lt;/span&gt;
+			&lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;IPSec&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+			&lt;span class=&quot;nt&quot;&gt;&amp;lt;dict&amp;gt;&lt;/span&gt;
+				&lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;AuthenticationMethod&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+				&lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;SharedSecret&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+				&lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;LocalIdentifier&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+				&lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;$ID&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+				&lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;LocalIdentifierType&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+				&lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;KeyID&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+				&lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;RemoteAddress&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+				&lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;$HOSTADDRESS&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+				&lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;SharedSecret&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+				&lt;span class=&quot;nt&quot;&gt;&amp;lt;data&amp;gt;&lt;/span&gt;
+				$SHAREDSECRET
+				&lt;span class=&quot;nt&quot;&gt;&amp;lt;/data&amp;gt;&lt;/span&gt;
+				&lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;XAuthEnabled&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+				&lt;span class=&quot;nt&quot;&gt;&amp;lt;integer&amp;gt;&lt;/span&gt;1&lt;span class=&quot;nt&quot;&gt;&amp;lt;/integer&amp;gt;&lt;/span&gt;
+				&lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;XAuthName&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+				&lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;$XAUTHUSER&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+				&lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;XAuthPassword&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+				&lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;$XAUTHPASS&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+			&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dict&amp;gt;&lt;/span&gt;
+			&lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;IPv4&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+			&lt;span class=&quot;nt&quot;&gt;&amp;lt;dict&amp;gt;&lt;/span&gt;
+				&lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;OverridePrimary&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+				&lt;span class=&quot;nt&quot;&gt;&amp;lt;integer&amp;gt;&lt;/span&gt;1&lt;span class=&quot;nt&quot;&gt;&amp;lt;/integer&amp;gt;&lt;/span&gt;
+			&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dict&amp;gt;&lt;/span&gt;
+			&lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;PayloadDescription&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+			&lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;Configures VPN settings&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+			&lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;PayloadDisplayName&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+			&lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;VPN&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+			&lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;PayloadIdentifier&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+			&lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;com.apple.vpn.managed.E3C1182E-71F5-4FCC-9C82-24D9ABD6EEB2&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+			&lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;PayloadType&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+			&lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;com.apple.vpn.managed&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+			&lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;PayloadUUID&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+			&lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;3D2399C4-3213-4FB2-989E-CDBD1B957142&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+			&lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;PayloadVersion&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+			&lt;span class=&quot;nt&quot;&gt;&amp;lt;real&amp;gt;&lt;/span&gt;1&lt;span class=&quot;nt&quot;&gt;&amp;lt;/real&amp;gt;&lt;/span&gt;
+			&lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;Proxies&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+			&lt;span class=&quot;nt&quot;&gt;&amp;lt;dict&amp;gt;&lt;/span&gt;
+				&lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;HTTPEnable&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+				&lt;span class=&quot;nt&quot;&gt;&amp;lt;integer&amp;gt;&lt;/span&gt;0&lt;span class=&quot;nt&quot;&gt;&amp;lt;/integer&amp;gt;&lt;/span&gt;
+				&lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;HTTPSEnable&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+				&lt;span class=&quot;nt&quot;&gt;&amp;lt;integer&amp;gt;&lt;/span&gt;0&lt;span class=&quot;nt&quot;&gt;&amp;lt;/integer&amp;gt;&lt;/span&gt;
+			&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dict&amp;gt;&lt;/span&gt;
+			&lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;UserDefinedName&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+			&lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;$VPNNETWORKDISPLAYNAME&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+			&lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;VPNType&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+			&lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;IPSec&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;OnDemandEnabled&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;integer&amp;gt;&lt;/span&gt;1&lt;span class=&quot;nt&quot;&gt;&amp;lt;/integer&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;OnDemandRules&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;array&amp;gt;&lt;/span&gt;
+                &lt;span class=&quot;nt&quot;&gt;&amp;lt;dict&amp;gt;&lt;/span&gt;
+                    &lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;Action&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+                    &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;EvaluateConnection&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+                    &lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;ActionParameters&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+                    &lt;span class=&quot;nt&quot;&gt;&amp;lt;array&amp;gt;&lt;/span&gt;
+                        &lt;span class=&quot;nt&quot;&gt;&amp;lt;dict&amp;gt;&lt;/span&gt;
+                            &lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;Domains&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+                            &lt;span class=&quot;nt&quot;&gt;&amp;lt;array&amp;gt;&lt;/span&gt;
+                                &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;.com&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+                                &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;.org&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+                                &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;.net&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+                                &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;.int&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+                                &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;.edu&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+                                &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;.gov&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+                                &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;.mil&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+                                &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;.ca&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+                                &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;.uk&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+                                &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;.us&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+                            &lt;span class=&quot;nt&quot;&gt;&amp;lt;/array&amp;gt;&lt;/span&gt;
+                            &lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;DomainAction&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+                            &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;ConnectIfNeeded&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+                            &lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;RequiredDNSServers&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+                            &lt;span class=&quot;nt&quot;&gt;&amp;lt;array&amp;gt;&lt;/span&gt;
+			                        &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;$INTDNS1&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+			                        &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;$INTDNS2&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+			                        &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;$INTDNS3&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+                            &lt;span class=&quot;nt&quot;&gt;&amp;lt;/array&amp;gt;&lt;/span&gt;
+                        &lt;span class=&quot;nt&quot;&gt;&amp;lt;/dict&amp;gt;&lt;/span&gt;
+                    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/array&amp;gt;&lt;/span&gt;
+                &lt;span class=&quot;nt&quot;&gt;&amp;lt;/dict&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;/array&amp;gt;&lt;/span&gt;
+		&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dict&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;/array&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;PayloadDisplayName&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;$VPNPROFILEDISPLAYNAME&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;PayloadIdentifier&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;$YOUR-RFQDN.F3303907-813E-4B52-A545-65D7507107BB&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;PayloadOrganization&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;$YOURORG&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;PayloadRemovalDisallowed&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;false/&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;PayloadType&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;Configuration&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;PayloadUUID&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;1754D2E7-25AE-4A8F-8A55-21E92F084A5B&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;PayloadVersion&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;integer&amp;gt;&lt;/span&gt;1&lt;span class=&quot;nt&quot;&gt;&amp;lt;/integer&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dict&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/plist&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;</content><author><name>Steve McMillin</name></author><category term="[&quot;Demo&quot;]" /><category term="Code" /><summary type="html">Testing out if xml syntax has issues.</summary></entry><entry><title type="html">Highlighting Ruby Code</title><link href="http://localhost:4000/highlight-test/" rel="alternate" type="text/html" title="Highlighting Ruby Code" /><published>2017-09-18T14:46:00-05:00</published><updated>2017-09-18T14:46:00-05:00</updated><id>http://localhost:4000/highlight-test</id><content type="html" xml:base="http://localhost:4000/highlight-test/">&lt;p&gt;Testing out ruby syntax highlighting
+&lt;!--more--&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;show&lt;/span&gt;
+  &lt;span class=&quot;vi&quot;&gt;@widget&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Widget&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;respond_to&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;html&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# show.html.erb&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;json&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;render&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;json: &lt;/span&gt;&lt;span class=&quot;vi&quot;&gt;@widget&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;</content><author><name>Steve McMillin</name></author><summary type="html">Testing out ruby syntax highlighting</summary></entry><entry><title type="html">Configure An OnDemand VPN Connection For OSX or iOS</title><link href="http://localhost:4000/configure-ondemand-vpn-connection-for/" rel="alternate" type="text/html" title="Configure An OnDemand VPN Connection For OSX or iOS" /><published>2017-09-18T14:46:00-05:00</published><updated>2017-09-18T14:46:00-05:00</updated><id>http://localhost:4000/configure-ondemand-vpn-connection-for</id><content type="html" xml:base="http://localhost:4000/configure-ondemand-vpn-connection-for/">&lt;p&gt;Basically this config profile configures your device such that whenever a domain specified in the list (starting at line 67) is contacted, it will attempt a lookup using the DNS servers specified. If the DNS servers specified aren’t reachable, it will attempt to establish the connection. You &lt;i&gt;could&lt;/i&gt; use DNS servers that don’t exist to get a permanent always on connection, but I would not recommend that as you can’t troubleshoot easily and the non-existent servers could be created at some point by another party.&lt;/p&gt;
+
+&lt;!--more--&gt;
+&lt;p&gt;Save this xml as a .mobileconfig and replace the parts with $TEXT with the relevant info.
+true&lt;script src=&quot;https://gist.github.com/nesteph/4ad1806cd05539b83272bf1dda796ce6.js&quot;&gt; &lt;/script&gt;&lt;/p&gt;</content><author><name>Steve McMillin</name></author><summary type="html">Basically this config profile configures your device such that whenever a domain specified in the list (starting at line 67) is contacted, it will attempt a lookup using the DNS servers specified. If the DNS servers specified aren’t reachable, it will attempt to establish the connection. You could use DNS servers that don’t exist to get a permanent always on connection, but I would not recommend that as you can’t troubleshoot easily and the non-existent servers could be created at some point by another party.</summary></entry><entry><title type="html">Windows 7 Guest In Parallels 12 Not Using Host VPN DNS Servers</title><link href="http://localhost:4000/windows-7-guest-in-parallels-12-not/" rel="alternate" type="text/html" title="Windows 7 Guest In Parallels 12 Not Using Host VPN DNS Servers" /><published>2017-01-10T18:25:00-06:00</published><updated>2017-01-10T18:25:00-06:00</updated><id>http://localhost:4000/windows-7-guest-in-parallels-12-not</id><content type="html" xml:base="http://localhost:4000/windows-7-guest-in-parallels-12-not/">&lt;p&gt;There seems to be a glitch with the virtual machine not getting the proper settings from the network even when all of the settings are configured on the host and in Parallels. If you follow these steps below it should get you up and running.&lt;!--more--&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Log in to the virtual machine.&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Click the &lt;strong&gt;Windows&lt;/strong&gt; button in the lower left of the screen.&lt;/p&gt;
+
+    &lt;div class=&quot;separator&quot; style=&quot;clear: both;&quot;&gt;[![](https://3.bp.blogspot.com/-qWW8O1548Z4/WHV3GS4C_8I/AAAAAAAAfiA/hBzsEJVlrhY1OzhxtgXgyd78atpQtVtegCEw/s1600/step%2B2.png)](https://3.bp.blogspot.com/-qWW8O1548Z4/WHV3GS4C_8I/AAAAAAAAfiA/hBzsEJVlrhY1OzhxtgXgyd78atpQtVtegCEw/s1600/step%2B2.png)&lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Click &lt;strong&gt;Control Panel&lt;/strong&gt; in the Start Menu.&lt;/p&gt;
+
+    &lt;div class=&quot;separator&quot; style=&quot;clear: both;&quot;&gt;[![](https://4.bp.blogspot.com/-CbtSV7x0-SM/WHV3yQ7B6pI/AAAAAAAAfiI/eRbi8hgB6qsaz5apu-0XoTiUUoxp1RtsgCEw/s320/step%2B3.png)](https://4.bp.blogspot.com/-CbtSV7x0-SM/WHV3yQ7B6pI/AAAAAAAAfiI/eRbi8hgB6qsaz5apu-0XoTiUUoxp1RtsgCEw/s1600/step%2B3.png)&lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Click &lt;strong&gt;View network status and tasks&lt;/strong&gt; located under the &lt;strong&gt;Network and Internet&lt;/strong&gt; section.&lt;/p&gt;
+
+    &lt;div class=&quot;separator&quot; style=&quot;clear: both;&quot;&gt;[![](https://3.bp.blogspot.com/-UTsXd2nL5aw/WHV3ypevMJI/AAAAAAAAfiI/BkHSATfLZ18cA_4_3pqZUuvGMfMBoHlbQCEw/s320/step%2B4.png)](https://3.bp.blogspot.com/-UTsXd2nL5aw/WHV3ypevMJI/AAAAAAAAfiI/BkHSATfLZ18cA_4_3pqZUuvGMfMBoHlbQCEw/s1600/step%2B4.png)&lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Click &lt;strong&gt;Change adapter settings&lt;/strong&gt; in the sidebar.&lt;/p&gt;
+
+    &lt;div class=&quot;separator&quot; style=&quot;clear: both;&quot;&gt;[![](https://4.bp.blogspot.com/-4JaBjT2zteM/WHV3yookVUI/AAAAAAAAfiI/8d6p3dwyTqsnJwIHhbS1_VZw__k3z14dACEw/s320/step%2B5.png)](https://4.bp.blogspot.com/-4JaBjT2zteM/WHV3yookVUI/AAAAAAAAfiI/8d6p3dwyTqsnJwIHhbS1_VZw__k3z14dACEw/s1600/step%2B5.png)&lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Right click on the &lt;strong&gt;Local Area Network&lt;/strong&gt; adapter and choose &lt;strong&gt;Properties&lt;/strong&gt;.&lt;/p&gt;
+
+    &lt;div class=&quot;separator&quot; style=&quot;clear: both;&quot;&gt;[![](https://2.bp.blogspot.com/-2k5XAzhoAUs/WHV3zt6B6xI/AAAAAAAAfiI/WGtETSXWJUMpAoHFaptsdKLStqrcT0x-QCEw/s320/step%2B6.png)](https://2.bp.blogspot.com/-2k5XAzhoAUs/WHV3zt6B6xI/AAAAAAAAfiI/WGtETSXWJUMpAoHFaptsdKLStqrcT0x-QCEw/s1600/step%2B6.png)&lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Select the &lt;strong&gt;Internet Protocol Version 4 (TCP/IPv4)&lt;/strong&gt; item and then click the &lt;strong&gt;Properties&lt;/strong&gt; button.&lt;/p&gt;
+
+    &lt;div class=&quot;separator&quot; style=&quot;clear: both;&quot;&gt;[![](https://3.bp.blogspot.com/-wnRSgU54iuY/WHV3zqGoYuI/AAAAAAAAfiI/opub7QHkbZgd1uObQ2r5v5w2YLKw8yadgCEw/s320/step%2B7.png)](https://3.bp.blogspot.com/-wnRSgU54iuY/WHV3zqGoYuI/AAAAAAAAfiI/opub7QHkbZgd1uObQ2r5v5w2YLKw8yadgCEw/s1600/step%2B7.png)&lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Select &lt;strong&gt;Use the following DNS server addresses&lt;/strong&gt; and enter the IP addresses of your desired DNS servers here.&lt;/p&gt;
+
+    &lt;div class=&quot;separator&quot; style=&quot;clear: both;&quot;&gt;[![](https://2.bp.blogspot.com/-Erx21vX0PCo/WHV3zzSx2II/AAAAAAAAfiI/TPddxVwjcSwRDmyovwpdmvpD7TPABzOKQCEw/s320/step%2B8.png)](https://2.bp.blogspot.com/-Erx21vX0PCo/WHV3zzSx2II/AAAAAAAAfiI/TPddxVwjcSwRDmyovwpdmvpD7TPABzOKQCEw/s1600/step%2B8.png)&lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;You shouldn’t need to, but you can restart the VM for safe measure.&lt;/li&gt;
+&lt;/ol&gt;</content><author><name>Steve McMillin</name></author><summary type="html">There seems to be a glitch with the virtual machine not getting the proper settings from the network even when all of the settings are configured on the host and in Parallels. If you follow these steps below it should get you up and running.</summary></entry><entry><title type="html">OSX Yosemite Login Wallpaper</title><link href="http://localhost:4000/osx-yosemite-login-wallpaper/" rel="alternate" type="text/html" title="OSX Yosemite Login Wallpaper" /><published>2015-04-29T20:02:00-05:00</published><updated>2015-04-29T20:02:00-05:00</updated><id>http://localhost:4000/osx-yosemite-login-wallpaper</id><content type="html" xml:base="http://localhost:4000/osx-yosemite-login-wallpaper/">&lt;p&gt;Want to customize the login background of your Mac? Maybe you want to brand it with your company wallpaper or have it match the wallpaper that the user sees when they log in. Well, Apple has made this really simple to do in Yosemite with a single file change.
+&lt;!--more--&gt;&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Get a copy of the image you would like use.&lt;/li&gt;
+  &lt;li&gt;Name it &lt;strong&gt;com.apple.desktop.admin.png&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;Copy it to &lt;strong&gt;/Library/Caches&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;You should probably backup the original in here if you ever want to revert to it.&lt;/li&gt;
+  &lt;li&gt;Logout or reboot the machine.&lt;/li&gt;
+  &lt;li&gt;All done!&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;I’ve made an utility that can be installed on machines to point them to a specific image saved on a web accessible method to set them all to that same image on the login window. This is still a work in progress, so be careful which machines you install it on.
+https://github.com/Nesteph/LW-Changer&lt;/p&gt;</content><author><name>Steve McMillin</name></author><category term="Customization" /><category term="OS X" /><category term="Branding" /><category term="User Experience" /><category term="Wallpaper" /><category term="Yosemite" /><summary type="html">Want to customize the login background of your Mac? Maybe you want to brand it with your company wallpaper or have it match the wallpaper that the user sees when they log in. Well, Apple has made this really simple to do in Yosemite with a single file change.</summary></entry><entry><title type="html">OSX Yosemite Default User Wallpaper</title><link href="http://localhost:4000/osx-yosemite-default-user-wallpaper/" rel="alternate" type="text/html" title="OSX Yosemite Default User Wallpaper" /><published>2015-04-28T19:53:00-05:00</published><updated>2015-04-28T19:53:00-05:00</updated><id>http://localhost:4000/osx-yosemite-default-user-wallpaper</id><content type="html" xml:base="http://localhost:4000/osx-yosemite-default-user-wallpaper/">&lt;p&gt;Have you wanted to brand your OSX machines for your end user experience, but still let the end user be able to customize their wallpaper? In OSX Yosemite (10.10.*), this is pretty simple to accomplish.
+&lt;!--more--&gt;&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Get a copy of the image you would like use.&lt;/li&gt;
+  &lt;li&gt;Name it &lt;strong&gt;&lt;u&gt;DefaultDesktop.jpg&lt;/u&gt;&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;Copy it to &lt;strong&gt;&lt;u&gt;/System/Library/CoreServices&lt;/u&gt;&lt;/strong&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;All new users (or if you wipe accounts at logout), will now use the image you placed here as the default wallpaper when logging in. At least until Apple decides to change the default wallpaper location, or replace your image.&lt;/p&gt;
+
+&lt;p&gt;The benefit of using this method rather than MCX/MDM, is that the end user can still customize the wallpaper to their liking, while you still get to put some branding in right out of the box.&lt;/p&gt;</content><author><name>Steve McMillin</name></author><category term="Customization" /><category term="OS X" /><category term="Branding" /><category term="User Experience" /><category term="Wallpaper" /><category term="Yosemite" /><summary type="html">Have you wanted to brand your OSX machines for your end user experience, but still let the end user be able to customize their wallpaper? In OSX Yosemite (10.10.*), this is pretty simple to accomplish.</summary></entry><entry><title type="html">Block OUs From Emailing Certain Groups in Google Apps</title><link href="http://localhost:4000/block-ous-from-emailing-certain-groups/" rel="alternate" type="text/html" title="Block OUs From Emailing Certain Groups in Google Apps" /><published>2015-03-27T19:18:00-05:00</published><updated>2015-03-27T19:18:00-05:00</updated><id>http://localhost:4000/block-ous-from-emailing-certain-groups</id><content type="html" xml:base="http://localhost:4000/block-ous-from-emailing-certain-groups/">&lt;p&gt;Recently I was tasked with figuring out a way to limit our student accounts from being able to send emails out to a large portion of our mailing lists/groups. The first option, blocking all emails except from owners and managers of the groups worked out great! Except they were the only users that could email those lists. Not a great fit, but do-able.
+&lt;!--more--&gt;&lt;/p&gt;
+
+&lt;figure style=&quot;float:right&quot;&gt;
+	&lt;img src=&quot;/images/posts/2015-03-27-block-ous-from-emailing-certain-groups/example_ou_setup.png&quot; /&gt;
+	&lt;figcaption&gt;Example OU Layout&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;After some poking around and reading up a bit more on the control panel, I was able to get the settings figured out to allow all of our staff to email all of our mailing lists including the student lists (which were locked down from the first option as a band-aid fix), while blocking the students from emailing lists we specified.&lt;/p&gt;
+
+&lt;p&gt;This guide assumes that you have all your students by themselves in either one OU or an OU with sub-OUs by some grouping scheme and the groups are named by their graduation year, meaning if the OU is “15”, then the group is also named that and the email for it is “15@domain.com”&lt;/p&gt;
+
+&lt;p&gt;First thing is first, make sure the group is set to allow “Owners of the Group, Managers of the Group and All Organization Members” to post in the Basic Permissions of the group(s) itself. This will allow anyone in the domain to email this group. We are going to limit this elsewhere.&lt;/p&gt;
+
+&lt;figure style=&quot;float:center&quot;&gt;
+	&lt;img src=&quot;/images/posts/2015-03-27-block-ous-from-emailing-certain-groups/basic_posting_perms.png&quot; /&gt;
+	&lt;figcaption style=&quot;text-align: center&quot;&gt;Basic Group Posting Permissions&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;Second, check your Advanced Settings for Gmail for the top level OU (the highest one), in my example, this is the Students OU, you want to block. We are going to be looking at the Compliance section here. In this section, we are going to add a Content Compliance.&lt;/p&gt;
+
+&lt;figure style=&quot;float:center&quot;&gt;
+	&lt;img src=&quot;/images/posts/2015-03-27-block-ous-from-emailing-certain-groups/content_compliance.png&quot; /&gt;
+	&lt;figcaption style=&quot;text-align: center&quot;&gt;Gmail Compliance section of the top level OU&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;We are going to give this a description so we recognize what it is if we ever need to come back and modify it. Something along the lines of “Mailing List Restrictions” should be fine. We are going to have this apply to “Outbound” and “Internal - sending” emails. The reason I would mark both of these is if you use special routing tables, multiple domains, or domain aliases. If you only have one domain, you can still safely mark both options.&lt;/p&gt;
+
+&lt;figure style=&quot;float:center&quot;&gt;
+	&lt;img src=&quot;/images/posts/2015-03-27-block-ous-from-emailing-certain-groups/content_compliance.png&quot; /&gt;
+	&lt;figcaption style=&quot;text-align: center&quot;&gt;Content Compliance Settings&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;Next, we need to add an expression or rule to match off of. The expression we are going to build is an &lt;strong&gt;Advanced content match,&lt;/strong&gt; the Location is &lt;strong&gt;Any envelop recipient&lt;/strong&gt;, and the Match type is &lt;strong&gt;Matches regex&lt;/strong&gt;. Once these options are selected, the logic behind the filter can be filled in and tested. In the Regexp field, enter one of the following styles and then hit Save. Repeat as necessary for your lists.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;^[0-9][0-9]@domain.com&lt;/code&gt; - All emails in the form of &lt;em&gt;@domain.com&lt;/em&gt; trigger the rule.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;^[0-9][0-9]@domain.(com|org|k12.edu)&lt;/code&gt; - All emails in the form of &lt;em&gt;@domain.com&lt;/em&gt;, &lt;em&gt;@domain.org&lt;/em&gt;, or &lt;em&gt;@domain.k12.edu&lt;/em&gt; trigger the rule.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;^[0-9][0-9]@(example|domain).com&lt;/code&gt; - All emails in the form of &lt;em&gt;@example.com&lt;/em&gt; or &lt;em&gt;@domain.com&lt;/em&gt; trigger the rule.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;figure style=&quot;float:center&quot;&gt;
+	&lt;img src=&quot;/images/posts/2015-03-27-block-ous-from-emailing-certain-groups/testing_regexp.png&quot; /&gt;
+	&lt;figcaption&gt;Testing the Regexp to make sure it works&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;This can be built out to your specific setup easily with the use of &lt;strong&gt;OR&lt;/strong&gt; logic by using &lt;code class=&quot;highlighter-rouge&quot;&gt;(phrase 1|phrase 2|phrase 3)&lt;/code&gt; to substitute multiple items in the same rule. An example Regexp that catches all email to your student lists could be something along the following (this is assuming that you have these groups set up with the appropriate grades as members in them):&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;^(hs|ms|is|es)-students@(domain1.k12.edu|domain2.k12.edu)&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;This would trigger on the following addresses on both domain1.k12.edu and domain2.k12.edu:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;hs-students@domains&lt;/li&gt;
+  &lt;li&gt;ms-students@domains&lt;/li&gt;
+  &lt;li&gt;is-students@domains&lt;/li&gt;
+  &lt;li&gt;es-students@domains&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Finally, choose whether you want to &lt;strong&gt;Modify&lt;/strong&gt;, &lt;strong&gt;Reject&lt;/strong&gt;, or &lt;strong&gt;Quarantine&lt;/strong&gt; the message. For this guide’s purposes, Reject message will be selected and an appropriate rejection notice applied. After that, add the setting using the Add setting button and then Save Changes.&lt;/p&gt;
+
+&lt;figure style=&quot;float:center&quot;&gt;
+	&lt;img src=&quot;/images/posts/2015-03-27-block-ous-from-emailing-certain-groups/compliance_match_options.png&quot; /&gt;
+	&lt;figcaption&gt;Compliance rule with a custom rejection notice added&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;Congratulations! All the accounts in the OU (and sub-OUs) that you applied this to, should no longer be able to email the lists you specified. The added bonus of this is that as you add additional OUs/Groups with that numbering scheme, you won’t need to modify this rule as they will automatically be restricted from emailing that list.&lt;/p&gt;
+
+&lt;p&gt;&lt;span style=&quot;font-size: x-small;&quot;&gt;&lt;strong&gt;Note:&lt;/strong&gt; I still need to test whether the ^ (signifies that the expression must begin with the following phrase) is necessary. I believe it is as &lt;a href=&quot;https://support.google.com/a/answer/1346934?hl=en&quot;&gt;Google’s documentation&lt;/a&gt; states that Any envelope recipient compares against the rule one at a time and you don’t want emails sent to roger09@domain.com from someone in the OUs getting rejected. Google’s Regexp documentation &lt;a href=&quot;https://support.google.com/a/answer/1346938?hl=en&quot;&gt;here&lt;/a&gt;.&lt;/span&gt;&lt;/p&gt;</content><author><name>Steve McMillin</name></author><category term="[&quot;Work&quot;]" /><category term="Gmail" /><category term="Google Apps" /><category term="OU" /><category term="Restricted Emails" /><category term="Google Groups" /><category term="Google Admin Console" /><summary type="html">Recently I was tasked with figuring out a way to limit our student accounts from being able to send emails out to a large portion of our mailing lists/groups. The first option, blocking all emails except from owners and managers of the groups worked out great! Except they were the only users that could email those lists. Not a great fit, but do-able.</summary></entry><entry><title type="html">You’re up and running!</title><link href="http://localhost:4000/Hello-World/" rel="alternate" type="text/html" title="You're up and running!" /><published>2014-03-03T00:00:00-06:00</published><updated>2014-03-03T00:00:00-06:00</updated><id>http://localhost:4000/Hello-World</id><content type="html" xml:base="http://localhost:4000/Hello-World/">&lt;p&gt;Next you can update your site name, avatar and other options using the _config.yml file in the root of your repository (shown below).
+&lt;!--more--&gt;
+&lt;img src=&quot;/images/config.png&quot; alt=&quot;_config.yml&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The easiest way to make your first post is to edit this one. Go into /_posts/ and update the Hello World markdown file. For more instructions head over to the &lt;a href=&quot;https://github.com/barryclark/jekyll-now&quot;&gt;Jekyll Now repository&lt;/a&gt; on GitHub.&lt;/p&gt;</content><author><name></name></author><summary type="html">Next you can update your site name, avatar and other options using the _config.yml file in the root of your repository (shown below).</summary></entry></feed>

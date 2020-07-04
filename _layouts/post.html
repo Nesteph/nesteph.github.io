@@ -1,0 +1,33 @@
+---
+layout: default
+---
+
+<article class="post">
+  <h2 class="title">{{ page.title }}</h1>
+  <h4 class="timestamp">#{{ page.date | date: "%B %e, %Y" }}</h4>
+
+  <div class="entry" style="margin-left: 28px;">
+    {{ content }}
+  </div>
+	<div id="post-nav">
+	    <div >    
+        {% if page.next.url %} 
+				<p style="text-align:right;">
+        <a style="color: #b5e853;" class="next" href="{{page.next.url}}">
+            <span>{{page.next.title}} &gt;</span>
+        </a> </p>
+        {% endif %}
+	        {% if page.previous.url %}
+	        <a style="color: #b5e853; text-align:left;" class="prev" href="{{page.previous.url}}">
+	            <span>&lt; {{page.previous.title}}</span>
+	        </a> 
+	        {% endif %} 
+
+	    </div>
+	</div>
+	<p>
+  	<a style="" class="more" href="{{ site.baseurl }}/">&lt;Home&gt;</a>
+	</p>
+
+  {% include disqus.html %}
+</article>
