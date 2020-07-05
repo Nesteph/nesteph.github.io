@@ -28,8 +28,12 @@
     <![endif]-->
 
     <link rel="stylesheet" type="text/css" href="/style.css" /-->
-    <link rel="alternate" type="application/rss+xml" title="Untitled Industries - Absent Input >  code, documentation, and ramblings from my daily escapades" href="/feed.xml" />
-
+    <link rel="alternate" type="application/rss+xml" title="Untitled Industries - >  code, documentation, and ramblings from my escapades" href="/feed.xml" />
+		
+				<link rel="stylesheet" href="/assets/css/chart.css">
+	 	<script src="/assets/js/Chart.js"></script>
+	  <script src="/assets/js/embed-charts.js"></script>
+		
     <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
   </head>
 
@@ -37,7 +41,7 @@
     <header>
       <div class="container">
         <h1 class="site-name"><a class="site-name" href="/">Untitled Industries</a></h1>
-        <h2>Absent Input >  code, documentation, and ramblings from my daily escapades</h2>
+        <h2>>  code, documentation, and ramblings from my escapades</h2>
         <section id="downloads">
             <a href="/categories/" class="btn">Categories</a>
 						<a href="/tags/" class="btn">Tags</a>
@@ -50,14 +54,124 @@
 			<section id="main_content">
 	      <article class="post">
   <h2 class="title">Configure An OnDemand VPN Connection For OSX or iOS</h1>
-  <h4 class="timestamp">#September 18, 2017</h4>
+  <h4 class="timestamp"># September 18, 2017</h4>
 
   <div class="entry" style="margin-left: 28px;">
     <p>Basically this config profile configures your device such that whenever a domain specified in the list (starting at line 67) is contacted, it will attempt a lookup using the DNS servers specified. If the DNS servers specified aren’t reachable, it will attempt to establish the connection. You <i>could</i> use DNS servers that don’t exist to get a permanent always on connection, but I would not recommend that as you can’t troubleshoot easily and the non-existent servers could be created at some point by another party.</p>
 
 <!--more-->
-<p>Save this xml as a .mobileconfig and replace the parts with $TEXT with the relevant info.
-true<script src="https://gist.github.com/nesteph/4ad1806cd05539b83272bf1dda796ce6.js"> </script></p>
+<p>Save this xml as a .mobileconfig and replace the parts with $TEXT with the relevant info.</p>
+<noscript><pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;
+&lt;plist version=&quot;1.0&quot;&gt;
+&lt;dict&gt;
+	&lt;key&gt;PayloadContent&lt;/key&gt;
+	&lt;array&gt;
+		&lt;dict&gt;
+			&lt;key&gt;IPSec&lt;/key&gt;
+			&lt;dict&gt;
+				&lt;key&gt;AuthenticationMethod&lt;/key&gt;
+				&lt;string&gt;SharedSecret&lt;/string&gt;
+				&lt;key&gt;LocalIdentifier&lt;/key&gt;
+				&lt;string&gt;$ID&lt;/string&gt;
+				&lt;key&gt;LocalIdentifierType&lt;/key&gt;
+				&lt;string&gt;KeyID&lt;/string&gt;
+				&lt;key&gt;RemoteAddress&lt;/key&gt;
+				&lt;string&gt;$HOSTADDRESS&lt;/string&gt;
+				&lt;key&gt;SharedSecret&lt;/key&gt;
+				&lt;data&gt;
+				$SHAREDSECRET
+				&lt;/data&gt;
+				&lt;key&gt;XAuthEnabled&lt;/key&gt;
+				&lt;integer&gt;1&lt;/integer&gt;
+				&lt;key&gt;XAuthName&lt;/key&gt;
+				&lt;string&gt;$XAUTHUSER&lt;/string&gt;
+				&lt;key&gt;XAuthPassword&lt;/key&gt;
+				&lt;string&gt;$XAUTHPASS&lt;/string&gt;
+			&lt;/dict&gt;
+			&lt;key&gt;IPv4&lt;/key&gt;
+			&lt;dict&gt;
+				&lt;key&gt;OverridePrimary&lt;/key&gt;
+				&lt;integer&gt;1&lt;/integer&gt;
+			&lt;/dict&gt;
+			&lt;key&gt;PayloadDescription&lt;/key&gt;
+			&lt;string&gt;Configures VPN settings&lt;/string&gt;
+			&lt;key&gt;PayloadDisplayName&lt;/key&gt;
+			&lt;string&gt;VPN&lt;/string&gt;
+			&lt;key&gt;PayloadIdentifier&lt;/key&gt;
+			&lt;string&gt;com.apple.vpn.managed.E3C1182E-71F5-4FCC-9C82-24D9ABD6EEB2&lt;/string&gt;
+			&lt;key&gt;PayloadType&lt;/key&gt;
+			&lt;string&gt;com.apple.vpn.managed&lt;/string&gt;
+			&lt;key&gt;PayloadUUID&lt;/key&gt;
+			&lt;string&gt;3D2399C4-3213-4FB2-989E-CDBD1B957142&lt;/string&gt;
+			&lt;key&gt;PayloadVersion&lt;/key&gt;
+			&lt;real&gt;1&lt;/real&gt;
+			&lt;key&gt;Proxies&lt;/key&gt;
+			&lt;dict&gt;
+				&lt;key&gt;HTTPEnable&lt;/key&gt;
+				&lt;integer&gt;0&lt;/integer&gt;
+				&lt;key&gt;HTTPSEnable&lt;/key&gt;
+				&lt;integer&gt;0&lt;/integer&gt;
+			&lt;/dict&gt;
+			&lt;key&gt;UserDefinedName&lt;/key&gt;
+			&lt;string&gt;$VPNNETWORKDISPLAYNAME&lt;/string&gt;
+			&lt;key&gt;VPNType&lt;/key&gt;
+			&lt;string&gt;IPSec&lt;/string&gt;
+            &lt;key&gt;OnDemandEnabled&lt;/key&gt;
+            &lt;integer&gt;1&lt;/integer&gt;
+            &lt;key&gt;OnDemandRules&lt;/key&gt;
+            &lt;array&gt;
+                &lt;dict&gt;
+                    &lt;key&gt;Action&lt;/key&gt;
+                    &lt;string&gt;EvaluateConnection&lt;/string&gt;
+                    &lt;key&gt;ActionParameters&lt;/key&gt;
+                    &lt;array&gt;
+                        &lt;dict&gt;
+                            &lt;key&gt;Domains&lt;/key&gt;
+                            &lt;array&gt;
+                                &lt;string&gt;.com&lt;/string&gt;
+                                &lt;string&gt;.org&lt;/string&gt;
+                                &lt;string&gt;.net&lt;/string&gt;
+                                &lt;string&gt;.int&lt;/string&gt;
+                                &lt;string&gt;.edu&lt;/string&gt;
+                                &lt;string&gt;.gov&lt;/string&gt;
+                                &lt;string&gt;.mil&lt;/string&gt;
+                                &lt;string&gt;.ca&lt;/string&gt;
+                                &lt;string&gt;.uk&lt;/string&gt;
+                                &lt;string&gt;.us&lt;/string&gt;
+                            &lt;/array&gt;
+                            &lt;key&gt;DomainAction&lt;/key&gt;
+                            &lt;string&gt;ConnectIfNeeded&lt;/string&gt;
+                            &lt;key&gt;RequiredDNSServers&lt;/key&gt;
+                            &lt;array&gt;
+			                        &lt;string&gt;$INTDNS1&lt;/string&gt;
+			                        &lt;string&gt;$INTDNS2&lt;/string&gt;
+			                        &lt;string&gt;$INTDNS3&lt;/string&gt;
+                            &lt;/array&gt;
+                        &lt;/dict&gt;
+                    &lt;/array&gt;
+                &lt;/dict&gt;
+            &lt;/array&gt;
+		&lt;/dict&gt;
+	&lt;/array&gt;
+	&lt;key&gt;PayloadDisplayName&lt;/key&gt;
+	&lt;string&gt;$VPNPROFILEDISPLAYNAME&lt;/string&gt;
+	&lt;key&gt;PayloadIdentifier&lt;/key&gt;
+	&lt;string&gt;$YOUR-RFQDN.F3303907-813E-4B52-A545-65D7507107BB&lt;/string&gt;
+	&lt;key&gt;PayloadOrganization&lt;/key&gt;
+	&lt;string&gt;$YOURORG&lt;/string&gt;
+	&lt;key&gt;PayloadRemovalDisallowed&lt;/key&gt;
+	&lt;false/&gt;
+	&lt;key&gt;PayloadType&lt;/key&gt;
+	&lt;string&gt;Configuration&lt;/string&gt;
+	&lt;key&gt;PayloadUUID&lt;/key&gt;
+	&lt;string&gt;1754D2E7-25AE-4A8F-8A55-21E92F084A5B&lt;/string&gt;
+	&lt;key&gt;PayloadVersion&lt;/key&gt;
+	&lt;integer&gt;1&lt;/integer&gt;
+&lt;/dict&gt;
+&lt;/plist&gt;</pre></noscript>
+<script src="https://gist.github.com/nesteph/4ad1806cd05539b83272bf1dda796ce6.js"> </script>
+
 
   </div>
 	<div id="post-nav">

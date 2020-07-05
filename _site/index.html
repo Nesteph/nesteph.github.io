@@ -9,8 +9,8 @@
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
 
     
-    <meta name="description" content="Absent Input >  code, documentation, and ramblings from my daily escapades">
-    <meta property="og:description" content="Absent Input >  code, documentation, and ramblings from my daily escapades" />
+    <meta name="description" content=">  code, documentation, and ramblings from my escapades">
+    <meta property="og:description" content=">  code, documentation, and ramblings from my escapades" />
     
     <meta name="author" content="Untitled Industries" />
 
@@ -24,8 +24,12 @@
     <![endif]-->
 
     <link rel="stylesheet" type="text/css" href="/style.css" /-->
-    <link rel="alternate" type="application/rss+xml" title="Untitled Industries - Absent Input >  code, documentation, and ramblings from my daily escapades" href="/feed.xml" />
-
+    <link rel="alternate" type="application/rss+xml" title="Untitled Industries - >  code, documentation, and ramblings from my escapades" href="/feed.xml" />
+		
+				<link rel="stylesheet" href="/assets/css/chart.css">
+	 	<script src="/assets/js/Chart.js"></script>
+	  <script src="/assets/js/embed-charts.js"></script>
+		
     <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
   </head>
 
@@ -33,7 +37,7 @@
     <header>
       <div class="container">
         <h1 class="site-name"><a class="site-name" href="/">Untitled Industries</a></h1>
-        <h2>Absent Input >  code, documentation, and ramblings from my daily escapades</h2>
+        <h2>>  code, documentation, and ramblings from my escapades</h2>
         <section id="downloads">
             <a href="/categories/" class="btn">Categories</a>
 						<a href="/tags/" class="btn">Tags</a>
@@ -48,7 +52,7 @@
   
     <article class="post">
       <h2 class="title"><a class="title" href="/Testing-Chart.js/">Testing Chart.js</a></h2>
-			<h4 class="timestamp">#<time class="more" datetime="2017-10-01T00:00:00-05:00" class="post-date">01 Oct 2017</time></h4>
+			<h4 class="timestamp">#<time class="more" datetime="2017-10-01T00:00:00-05:00" class="post-date"> October  1, 2017</time></h4>
       <div class="entry" style="margin-left: 28px;">
 				
 				    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
@@ -91,7 +95,7 @@
 					newDate(6)
 				],
 				datasets: [{
-					label: "My First dataset",
+					label: "Dataset 1",
 					backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
 					borderColor: window.chartColors.red,
 					fill: false,
@@ -105,7 +109,7 @@
 						randomScalingFactor()
 					],
 				}, {
-					label: "My Second dataset",
+					label: "Dataset 2",
 					backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
 					borderColor: window.chartColors.blue,
 					fill: false,
@@ -119,23 +123,19 @@
 						randomScalingFactor()
 					],
 				}, {
-					label: "Dataset with point data",
+					label: "Dataset 3",
 					backgroundColor: color(window.chartColors.green).alpha(0.5).rgbString(),
 					borderColor: window.chartColors.green,
 					fill: false,
-					data: [{
-						x: newDateString(0),
-						y: randomScalingFactor()
-					}, {
-						x: newDateString(5),
-						y: randomScalingFactor()
-					}, {
-						x: newDateString(7),
-						y: randomScalingFactor()
-					}, {
-						x: newDateString(15),
-						y: randomScalingFactor()
-					}],
+					data: [
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor()
+					],
 				}]
 			},
 			options: {
@@ -244,11 +244,10 @@
   
     <article class="post">
       <h2 class="title"><a class="title" href="/highlight-test-xml/">Highlighting XML Code Test</a></h2>
-			<h4 class="timestamp">#<time class="more" datetime="2017-09-18T14:46:00-05:00" class="post-date">18 Sep 2017</time></h4>
+			<h4 class="timestamp">#<time class="more" datetime="2017-09-18T14:46:00-05:00" class="post-date"> September 18, 2017</time></h4>
       <div class="entry" style="margin-left: 28px;">
 				
 				    <p>Testing out if xml syntax has issues.</p>
-
 
 						<p>
 			      	<a class="more" href="/highlight-test-xml/" class="read-more">&lt;Read More&gt;</a>
@@ -259,11 +258,10 @@
   
     <article class="post">
       <h2 class="title"><a class="title" href="/highlight-test/">Highlighting Ruby Code</a></h2>
-			<h4 class="timestamp">#<time class="more" datetime="2017-09-18T14:46:00-05:00" class="post-date">18 Sep 2017</time></h4>
+			<h4 class="timestamp">#<time class="more" datetime="2017-09-18T14:46:00-05:00" class="post-date"> September 18, 2017</time></h4>
       <div class="entry" style="margin-left: 28px;">
 				
 				    <p>Testing out ruby syntax highlighting</p>
-
 
 						<p>
 			      	<a class="more" href="/highlight-test/" class="read-more">&lt;Read More&gt;</a>
@@ -274,7 +272,7 @@
   
     <article class="post">
       <h2 class="title"><a class="title" href="/configure-ondemand-vpn-connection-for/">Configure An OnDemand VPN Connection For OSX or iOS</a></h2>
-			<h4 class="timestamp">#<time class="more" datetime="2017-09-18T14:46:00-05:00" class="post-date">18 Sep 2017</time></h4>
+			<h4 class="timestamp">#<time class="more" datetime="2017-09-18T14:46:00-05:00" class="post-date"> September 18, 2017</time></h4>
       <div class="entry" style="margin-left: 28px;">
 				
 				    <p>Basically this config profile configures your device such that whenever a domain specified in the list (starting at line 67) is contacted, it will attempt a lookup using the DNS servers specified. If the DNS servers specified aren’t reachable, it will attempt to establish the connection. You <i>could</i> use DNS servers that don’t exist to get a permanent always on connection, but I would not recommend that as you can’t troubleshoot easily and the non-existent servers could be created at some point by another party.</p>
@@ -289,11 +287,10 @@
   
     <article class="post">
       <h2 class="title"><a class="title" href="/windows-7-guest-in-parallels-12-not/">Windows 7 Guest In Parallels 12 Not Using Host VPN DNS Servers</a></h2>
-			<h4 class="timestamp">#<time class="more" datetime="2017-01-10T18:25:00-06:00" class="post-date">10 Jan 2017</time></h4>
+			<h4 class="timestamp">#<time class="more" datetime="2017-01-10T18:25:00-06:00" class="post-date"> January 10, 2017</time></h4>
       <div class="entry" style="margin-left: 28px;">
 				
 				    <p>There seems to be a glitch with the virtual machine not getting the proper settings from the network even when all of the settings are configured on the host and in Parallels. If you follow these steps below it should get you up and running.</p>
-
 
 						<p>
 			      	<a class="more" href="/windows-7-guest-in-parallels-12-not/" class="read-more">&lt;Read More&gt;</a>
@@ -307,7 +304,7 @@
 <!-- Pagination links -->
 <div class="pagination">
   
-    <a href="/page/page2/" class="next"> &lt; Older</a>
+    <a href="/older/2/" class="next"> &lt; Older</a>
   
 	|
   

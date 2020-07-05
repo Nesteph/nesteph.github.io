@@ -48,7 +48,7 @@ tags:
 					newDate(6)
 				],
 				datasets: [{
-					label: "My First dataset",
+					label: "Dataset 1",
 					backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
 					borderColor: window.chartColors.red,
 					fill: false,
@@ -62,7 +62,7 @@ tags:
 						randomScalingFactor()
 					],
 				}, {
-					label: "My Second dataset",
+					label: "Dataset 2",
 					backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
 					borderColor: window.chartColors.blue,
 					fill: false,
@@ -76,23 +76,19 @@ tags:
 						randomScalingFactor()
 					],
 				}, {
-					label: "Dataset with point data",
+					label: "Dataset 3",
 					backgroundColor: color(window.chartColors.green).alpha(0.5).rgbString(),
 					borderColor: window.chartColors.green,
 					fill: false,
-					data: [{
-						x: newDateString(0),
-						y: randomScalingFactor()
-					}, {
-						x: newDateString(5),
-						y: randomScalingFactor()
-					}, {
-						x: newDateString(7),
-						y: randomScalingFactor()
-					}, {
-						x: newDateString(15),
-						y: randomScalingFactor()
-					}],
+					data: [
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor()
+					],
 				}]
 			},
 			options: {

@@ -46,8 +46,12 @@
     <![endif]-->
 
     <link rel="stylesheet" type="text/css" href="/style.css" /-->
-    <link rel="alternate" type="application/rss+xml" title="Untitled Industries - Absent Input >  code, documentation, and ramblings from my daily escapades" href="/feed.xml" />
-
+    <link rel="alternate" type="application/rss+xml" title="Untitled Industries - >  code, documentation, and ramblings from my escapades" href="/feed.xml" />
+		
+				<link rel="stylesheet" href="/assets/css/chart.css">
+	 	<script src="/assets/js/Chart.js"></script>
+	  <script src="/assets/js/embed-charts.js"></script>
+		
     <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
   </head>
 
@@ -55,7 +59,7 @@
     <header>
       <div class="container">
         <h1 class="site-name"><a class="site-name" href="/">Untitled Industries</a></h1>
-        <h2>Absent Input >  code, documentation, and ramblings from my daily escapades</h2>
+        <h2>>  code, documentation, and ramblings from my escapades</h2>
         <section id="downloads">
             <a href="/categories/" class="btn">Categories</a>
 						<a href="/tags/" class="btn">Tags</a>
@@ -68,7 +72,7 @@
 			<section id="main_content">
 	      <article class="post">
   <h2 class="title">Testing Chart.js</h1>
-  <h4 class="timestamp">#October  1, 2017</h4>
+  <h4 class="timestamp"># October  1, 2017</h4>
 
   <div class="entry" style="margin-left: 28px;">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
@@ -111,7 +115,7 @@
 					newDate(6)
 				],
 				datasets: [{
-					label: "My First dataset",
+					label: "Dataset 1",
 					backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
 					borderColor: window.chartColors.red,
 					fill: false,
@@ -125,7 +129,7 @@
 						randomScalingFactor()
 					],
 				}, {
-					label: "My Second dataset",
+					label: "Dataset 2",
 					backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
 					borderColor: window.chartColors.blue,
 					fill: false,
@@ -139,23 +143,19 @@
 						randomScalingFactor()
 					],
 				}, {
-					label: "Dataset with point data",
+					label: "Dataset 3",
 					backgroundColor: color(window.chartColors.green).alpha(0.5).rgbString(),
 					borderColor: window.chartColors.green,
 					fill: false,
-					data: [{
-						x: newDateString(0),
-						y: randomScalingFactor()
-					}, {
-						x: newDateString(5),
-						y: randomScalingFactor()
-					}, {
-						x: newDateString(7),
-						y: randomScalingFactor()
-					}, {
-						x: newDateString(15),
-						y: randomScalingFactor()
-					}],
+					data: [
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor()
+					],
 				}]
 			},
 			options: {

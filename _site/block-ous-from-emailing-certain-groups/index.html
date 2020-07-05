@@ -10,10 +10,8 @@
 
     
     <meta name="description" content="Recently I was tasked with figuring out a way to limit our student accounts from being able to send emails out to a large portion of our mailing lists/groups. The first option, blocking all emails except from owners and managers of the groups worked out great! Except they were the only users that could email those lists. Not a great fit, but do-able.
-
 " />
     <meta property="og:description" content="Recently I was tasked with figuring out a way to limit our student accounts from being able to send emails out to a large portion of our mailing lists/groups. The first option, blocking all emails except from owners and managers of the groups worked out great! Except they were the only users that could email those lists. Not a great fit, but do-able.
-
 " />
     
     <meta name="author" content="Untitled Industries" />
@@ -28,8 +26,12 @@
     <![endif]-->
 
     <link rel="stylesheet" type="text/css" href="/style.css" /-->
-    <link rel="alternate" type="application/rss+xml" title="Untitled Industries - Absent Input >  code, documentation, and ramblings from my daily escapades" href="/feed.xml" />
-
+    <link rel="alternate" type="application/rss+xml" title="Untitled Industries - >  code, documentation, and ramblings from my escapades" href="/feed.xml" />
+		
+				<link rel="stylesheet" href="/assets/css/chart.css">
+	 	<script src="/assets/js/Chart.js"></script>
+	  <script src="/assets/js/embed-charts.js"></script>
+		
     <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
   </head>
 
@@ -37,7 +39,7 @@
     <header>
       <div class="container">
         <h1 class="site-name"><a class="site-name" href="/">Untitled Industries</a></h1>
-        <h2>Absent Input >  code, documentation, and ramblings from my daily escapades</h2>
+        <h2>>  code, documentation, and ramblings from my escapades</h2>
         <section id="downloads">
             <a href="/categories/" class="btn">Categories</a>
 						<a href="/tags/" class="btn">Tags</a>
@@ -50,7 +52,7 @@
 			<section id="main_content">
 	      <article class="post">
   <h2 class="title">Block OUs From Emailing Certain Groups in Google Apps</h1>
-  <h4 class="timestamp">#March 27, 2015</h4>
+  <h4 class="timestamp"># March 27, 2015</h4>
 
   <div class="entry" style="margin-left: 28px;">
     <p>Recently I was tasked with figuring out a way to limit our student accounts from being able to send emails out to a large portion of our mailing lists/groups. The first option, blocking all emails except from owners and managers of the groups worked out great! Except they were the only users that could email those lists. Not a great fit, but do-able.
@@ -88,9 +90,9 @@
 <p>Next, we need to add an expression or rule to match off of. The expression we are going to build is an <strong>Advanced content match,</strong> the Location is <strong>Any envelop recipient</strong>, and the Match type is <strong>Matches regex</strong>. Once these options are selected, the logic behind the filter can be filled in and tested. In the Regexp field, enter one of the following styles and then hit Save. Repeat as necessary for your lists.</p>
 
 <ul>
-  <li><code class="highlighter-rouge">^[0-9][0-9]@domain.com</code> - All emails in the form of <em>@domain.com</em> trigger the rule.</li>
-  <li><code class="highlighter-rouge">^[0-9][0-9]@domain.(com|org|k12.edu)</code> - All emails in the form of <em>@domain.com</em>, <em>@domain.org</em>, or <em>@domain.k12.edu</em> trigger the rule.</li>
-  <li><code class="highlighter-rouge">^[0-9][0-9]@(example|domain).com</code> - All emails in the form of <em>@example.com</em> or <em>@domain.com</em> trigger the rule.</li>
+  <li><code class="language-plaintext highlighter-rouge">^[0-9][0-9]@domain.com</code> - All emails in the form of <em>@domain.com</em> trigger the rule.</li>
+  <li><code class="language-plaintext highlighter-rouge">^[0-9][0-9]@domain.(com|org|k12.edu)</code> - All emails in the form of <em>@domain.com</em>, <em>@domain.org</em>, or <em>@domain.k12.edu</em> trigger the rule.</li>
+  <li><code class="language-plaintext highlighter-rouge">^[0-9][0-9]@(example|domain).com</code> - All emails in the form of <em>@example.com</em> or <em>@domain.com</em> trigger the rule.</li>
 </ul>
 
 <figure style="float:center">
@@ -98,10 +100,10 @@
 	<figcaption>Testing the Regexp to make sure it works</figcaption>
 </figure>
 
-<p>This can be built out to your specific setup easily with the use of <strong>OR</strong> logic by using <code class="highlighter-rouge">(phrase 1|phrase 2|phrase 3)</code> to substitute multiple items in the same rule. An example Regexp that catches all email to your student lists could be something along the following (this is assuming that you have these groups set up with the appropriate grades as members in them):</p>
+<p>This can be built out to your specific setup easily with the use of <strong>OR</strong> logic by using <code class="language-plaintext highlighter-rouge">(phrase 1|phrase 2|phrase 3)</code> to substitute multiple items in the same rule. An example Regexp that catches all email to your student lists could be something along the following (this is assuming that you have these groups set up with the appropriate grades as members in them):</p>
 
 <ul>
-  <li><code class="highlighter-rouge">^(hs|ms|is|es)-students@(domain1.k12.edu|domain2.k12.edu)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">^(hs|ms|is|es)-students@(domain1.k12.edu|domain2.k12.edu)</code></li>
 </ul>
 
 <p>This would trigger on the following addresses on both domain1.k12.edu and domain2.k12.edu:</p>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.5.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2017-10-01T15:51:42-05:00</updated><id>http://localhost:4000/</id><title type="html">Untitled Industries</title><subtitle>Absent Input &gt;  code, documentation, and ramblings from my daily escapades</subtitle><entry><title type="html">Testing Chart.js</title><link href="http://localhost:4000/Testing-Chart.js/" rel="alternate" type="text/html" title="Testing Chart.js" /><published>2017-10-01T00:00:00-05:00</published><updated>2017-10-01T00:00:00-05:00</updated><id>http://localhost:4000/Testing-Chart.js</id><content type="html" xml:base="http://localhost:4000/Testing-Chart.js/">&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js&quot;&gt;&lt;/script&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.1.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-07-04T21:48:56-05:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Untitled Industries</title><subtitle>&gt;  code, documentation, and ramblings from my escapades</subtitle><entry><title type="html">Testing Chart.js</title><link href="http://localhost:4000/Testing-Chart.js/" rel="alternate" type="text/html" title="Testing Chart.js" /><published>2017-10-01T00:00:00-05:00</published><updated>2017-10-01T00:00:00-05:00</updated><id>http://localhost:4000/Testing-Chart.js</id><content type="html" xml:base="http://localhost:4000/Testing-Chart.js/">&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js&quot;&gt;&lt;/script&gt;
 &lt;script src=&quot;http://www.chartjs.org/dist/2.7.0/Chart.js&quot;&gt;&lt;/script&gt;
 &lt;script src=&quot;http://www.chartjs.org/samples/latest/utils.js&quot;&gt;&lt;/script&gt;
 &lt;canvas id=&quot;canvas&quot;&gt;&lt;/canvas&gt;
@@ -38,7 +38,7 @@
 					newDate(6)
 				],
 				datasets: [{
-					label: &quot;My First dataset&quot;,
+					label: &quot;Dataset 1&quot;,
 					backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
 					borderColor: window.chartColors.red,
 					fill: false,
@@ -52,7 +52,7 @@
 						randomScalingFactor()
 					],
 				}, {
-					label: &quot;My Second dataset&quot;,
+					label: &quot;Dataset 2&quot;,
 					backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
 					borderColor: window.chartColors.blue,
 					fill: false,
@@ -66,23 +66,19 @@
 						randomScalingFactor()
 					],
 				}, {
-					label: &quot;Dataset with point data&quot;,
+					label: &quot;Dataset 3&quot;,
 					backgroundColor: color(window.chartColors.green).alpha(0.5).rgbString(),
 					borderColor: window.chartColors.green,
 					fill: false,
-					data: [{
-						x: newDateString(0),
-						y: randomScalingFactor()
-					}, {
-						x: newDateString(5),
-						y: randomScalingFactor()
-					}, {
-						x: newDateString(7),
-						y: randomScalingFactor()
-					}, {
-						x: newDateString(15),
-						y: randomScalingFactor()
-					}],
+					data: [
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor()
+					],
 				}]
 			},
 			options: {
@@ -307,8 +303,117 @@
 &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;</content><author><name>Steve McMillin</name></author><summary type="html">Testing out ruby syntax highlighting</summary></entry><entry><title type="html">Configure An OnDemand VPN Connection For OSX or iOS</title><link href="http://localhost:4000/configure-ondemand-vpn-connection-for/" rel="alternate" type="text/html" title="Configure An OnDemand VPN Connection For OSX or iOS" /><published>2017-09-18T14:46:00-05:00</published><updated>2017-09-18T14:46:00-05:00</updated><id>http://localhost:4000/configure-ondemand-vpn-connection-for</id><content type="html" xml:base="http://localhost:4000/configure-ondemand-vpn-connection-for/">&lt;p&gt;Basically this config profile configures your device such that whenever a domain specified in the list (starting at line 67) is contacted, it will attempt a lookup using the DNS servers specified. If the DNS servers specified aren’t reachable, it will attempt to establish the connection. You &lt;i&gt;could&lt;/i&gt; use DNS servers that don’t exist to get a permanent always on connection, but I would not recommend that as you can’t troubleshoot easily and the non-existent servers could be created at some point by another party.&lt;/p&gt;
 
 &lt;!--more--&gt;
-&lt;p&gt;Save this xml as a .mobileconfig and replace the parts with $TEXT with the relevant info.
-true&lt;script src=&quot;https://gist.github.com/nesteph/4ad1806cd05539b83272bf1dda796ce6.js&quot;&gt; &lt;/script&gt;&lt;/p&gt;</content><author><name>Steve McMillin</name></author><summary type="html">Basically this config profile configures your device such that whenever a domain specified in the list (starting at line 67) is contacted, it will attempt a lookup using the DNS servers specified. If the DNS servers specified aren’t reachable, it will attempt to establish the connection. You could use DNS servers that don’t exist to get a permanent always on connection, but I would not recommend that as you can’t troubleshoot easily and the non-existent servers could be created at some point by another party.</summary></entry><entry><title type="html">Windows 7 Guest In Parallels 12 Not Using Host VPN DNS Servers</title><link href="http://localhost:4000/windows-7-guest-in-parallels-12-not/" rel="alternate" type="text/html" title="Windows 7 Guest In Parallels 12 Not Using Host VPN DNS Servers" /><published>2017-01-10T18:25:00-06:00</published><updated>2017-01-10T18:25:00-06:00</updated><id>http://localhost:4000/windows-7-guest-in-parallels-12-not</id><content type="html" xml:base="http://localhost:4000/windows-7-guest-in-parallels-12-not/">&lt;p&gt;There seems to be a glitch with the virtual machine not getting the proper settings from the network even when all of the settings are configured on the host and in Parallels. If you follow these steps below it should get you up and running.&lt;!--more--&gt;&lt;/p&gt;
+&lt;p&gt;Save this xml as a .mobileconfig and replace the parts with $TEXT with the relevant info.&lt;/p&gt;
+&lt;noscript&gt;&lt;pre&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;
+&amp;lt;!DOCTYPE plist PUBLIC &amp;quot;-//Apple//DTD PLIST 1.0//EN&amp;quot; &amp;quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&amp;quot;&amp;gt;
+&amp;lt;plist version=&amp;quot;1.0&amp;quot;&amp;gt;
+&amp;lt;dict&amp;gt;
+	&amp;lt;key&amp;gt;PayloadContent&amp;lt;/key&amp;gt;
+	&amp;lt;array&amp;gt;
+		&amp;lt;dict&amp;gt;
+			&amp;lt;key&amp;gt;IPSec&amp;lt;/key&amp;gt;
+			&amp;lt;dict&amp;gt;
+				&amp;lt;key&amp;gt;AuthenticationMethod&amp;lt;/key&amp;gt;
+				&amp;lt;string&amp;gt;SharedSecret&amp;lt;/string&amp;gt;
+				&amp;lt;key&amp;gt;LocalIdentifier&amp;lt;/key&amp;gt;
+				&amp;lt;string&amp;gt;$ID&amp;lt;/string&amp;gt;
+				&amp;lt;key&amp;gt;LocalIdentifierType&amp;lt;/key&amp;gt;
+				&amp;lt;string&amp;gt;KeyID&amp;lt;/string&amp;gt;
+				&amp;lt;key&amp;gt;RemoteAddress&amp;lt;/key&amp;gt;
+				&amp;lt;string&amp;gt;$HOSTADDRESS&amp;lt;/string&amp;gt;
+				&amp;lt;key&amp;gt;SharedSecret&amp;lt;/key&amp;gt;
+				&amp;lt;data&amp;gt;
+				$SHAREDSECRET
+				&amp;lt;/data&amp;gt;
+				&amp;lt;key&amp;gt;XAuthEnabled&amp;lt;/key&amp;gt;
+				&amp;lt;integer&amp;gt;1&amp;lt;/integer&amp;gt;
+				&amp;lt;key&amp;gt;XAuthName&amp;lt;/key&amp;gt;
+				&amp;lt;string&amp;gt;$XAUTHUSER&amp;lt;/string&amp;gt;
+				&amp;lt;key&amp;gt;XAuthPassword&amp;lt;/key&amp;gt;
+				&amp;lt;string&amp;gt;$XAUTHPASS&amp;lt;/string&amp;gt;
+			&amp;lt;/dict&amp;gt;
+			&amp;lt;key&amp;gt;IPv4&amp;lt;/key&amp;gt;
+			&amp;lt;dict&amp;gt;
+				&amp;lt;key&amp;gt;OverridePrimary&amp;lt;/key&amp;gt;
+				&amp;lt;integer&amp;gt;1&amp;lt;/integer&amp;gt;
+			&amp;lt;/dict&amp;gt;
+			&amp;lt;key&amp;gt;PayloadDescription&amp;lt;/key&amp;gt;
+			&amp;lt;string&amp;gt;Configures VPN settings&amp;lt;/string&amp;gt;
+			&amp;lt;key&amp;gt;PayloadDisplayName&amp;lt;/key&amp;gt;
+			&amp;lt;string&amp;gt;VPN&amp;lt;/string&amp;gt;
+			&amp;lt;key&amp;gt;PayloadIdentifier&amp;lt;/key&amp;gt;
+			&amp;lt;string&amp;gt;com.apple.vpn.managed.E3C1182E-71F5-4FCC-9C82-24D9ABD6EEB2&amp;lt;/string&amp;gt;
+			&amp;lt;key&amp;gt;PayloadType&amp;lt;/key&amp;gt;
+			&amp;lt;string&amp;gt;com.apple.vpn.managed&amp;lt;/string&amp;gt;
+			&amp;lt;key&amp;gt;PayloadUUID&amp;lt;/key&amp;gt;
+			&amp;lt;string&amp;gt;3D2399C4-3213-4FB2-989E-CDBD1B957142&amp;lt;/string&amp;gt;
+			&amp;lt;key&amp;gt;PayloadVersion&amp;lt;/key&amp;gt;
+			&amp;lt;real&amp;gt;1&amp;lt;/real&amp;gt;
+			&amp;lt;key&amp;gt;Proxies&amp;lt;/key&amp;gt;
+			&amp;lt;dict&amp;gt;
+				&amp;lt;key&amp;gt;HTTPEnable&amp;lt;/key&amp;gt;
+				&amp;lt;integer&amp;gt;0&amp;lt;/integer&amp;gt;
+				&amp;lt;key&amp;gt;HTTPSEnable&amp;lt;/key&amp;gt;
+				&amp;lt;integer&amp;gt;0&amp;lt;/integer&amp;gt;
+			&amp;lt;/dict&amp;gt;
+			&amp;lt;key&amp;gt;UserDefinedName&amp;lt;/key&amp;gt;
+			&amp;lt;string&amp;gt;$VPNNETWORKDISPLAYNAME&amp;lt;/string&amp;gt;
+			&amp;lt;key&amp;gt;VPNType&amp;lt;/key&amp;gt;
+			&amp;lt;string&amp;gt;IPSec&amp;lt;/string&amp;gt;
+            &amp;lt;key&amp;gt;OnDemandEnabled&amp;lt;/key&amp;gt;
+            &amp;lt;integer&amp;gt;1&amp;lt;/integer&amp;gt;
+            &amp;lt;key&amp;gt;OnDemandRules&amp;lt;/key&amp;gt;
+            &amp;lt;array&amp;gt;
+                &amp;lt;dict&amp;gt;
+                    &amp;lt;key&amp;gt;Action&amp;lt;/key&amp;gt;
+                    &amp;lt;string&amp;gt;EvaluateConnection&amp;lt;/string&amp;gt;
+                    &amp;lt;key&amp;gt;ActionParameters&amp;lt;/key&amp;gt;
+                    &amp;lt;array&amp;gt;
+                        &amp;lt;dict&amp;gt;
+                            &amp;lt;key&amp;gt;Domains&amp;lt;/key&amp;gt;
+                            &amp;lt;array&amp;gt;
+                                &amp;lt;string&amp;gt;.com&amp;lt;/string&amp;gt;
+                                &amp;lt;string&amp;gt;.org&amp;lt;/string&amp;gt;
+                                &amp;lt;string&amp;gt;.net&amp;lt;/string&amp;gt;
+                                &amp;lt;string&amp;gt;.int&amp;lt;/string&amp;gt;
+                                &amp;lt;string&amp;gt;.edu&amp;lt;/string&amp;gt;
+                                &amp;lt;string&amp;gt;.gov&amp;lt;/string&amp;gt;
+                                &amp;lt;string&amp;gt;.mil&amp;lt;/string&amp;gt;
+                                &amp;lt;string&amp;gt;.ca&amp;lt;/string&amp;gt;
+                                &amp;lt;string&amp;gt;.uk&amp;lt;/string&amp;gt;
+                                &amp;lt;string&amp;gt;.us&amp;lt;/string&amp;gt;
+                            &amp;lt;/array&amp;gt;
+                            &amp;lt;key&amp;gt;DomainAction&amp;lt;/key&amp;gt;
+                            &amp;lt;string&amp;gt;ConnectIfNeeded&amp;lt;/string&amp;gt;
+                            &amp;lt;key&amp;gt;RequiredDNSServers&amp;lt;/key&amp;gt;
+                            &amp;lt;array&amp;gt;
+			                        &amp;lt;string&amp;gt;$INTDNS1&amp;lt;/string&amp;gt;
+			                        &amp;lt;string&amp;gt;$INTDNS2&amp;lt;/string&amp;gt;
+			                        &amp;lt;string&amp;gt;$INTDNS3&amp;lt;/string&amp;gt;
+                            &amp;lt;/array&amp;gt;
+                        &amp;lt;/dict&amp;gt;
+                    &amp;lt;/array&amp;gt;
+                &amp;lt;/dict&amp;gt;
+            &amp;lt;/array&amp;gt;
+		&amp;lt;/dict&amp;gt;
+	&amp;lt;/array&amp;gt;
+	&amp;lt;key&amp;gt;PayloadDisplayName&amp;lt;/key&amp;gt;
+	&amp;lt;string&amp;gt;$VPNPROFILEDISPLAYNAME&amp;lt;/string&amp;gt;
+	&amp;lt;key&amp;gt;PayloadIdentifier&amp;lt;/key&amp;gt;
+	&amp;lt;string&amp;gt;$YOUR-RFQDN.F3303907-813E-4B52-A545-65D7507107BB&amp;lt;/string&amp;gt;
+	&amp;lt;key&amp;gt;PayloadOrganization&amp;lt;/key&amp;gt;
+	&amp;lt;string&amp;gt;$YOURORG&amp;lt;/string&amp;gt;
+	&amp;lt;key&amp;gt;PayloadRemovalDisallowed&amp;lt;/key&amp;gt;
+	&amp;lt;false/&amp;gt;
+	&amp;lt;key&amp;gt;PayloadType&amp;lt;/key&amp;gt;
+	&amp;lt;string&amp;gt;Configuration&amp;lt;/string&amp;gt;
+	&amp;lt;key&amp;gt;PayloadUUID&amp;lt;/key&amp;gt;
+	&amp;lt;string&amp;gt;1754D2E7-25AE-4A8F-8A55-21E92F084A5B&amp;lt;/string&amp;gt;
+	&amp;lt;key&amp;gt;PayloadVersion&amp;lt;/key&amp;gt;
+	&amp;lt;integer&amp;gt;1&amp;lt;/integer&amp;gt;
+&amp;lt;/dict&amp;gt;
+&amp;lt;/plist&amp;gt;&lt;/pre&gt;&lt;/noscript&gt;
+&lt;script src=&quot;https://gist.github.com/nesteph/4ad1806cd05539b83272bf1dda796ce6.js&quot;&gt; &lt;/script&gt;</content><author><name>Steve McMillin</name></author><summary type="html">Basically this config profile configures your device such that whenever a domain specified in the list (starting at line 67) is contacted, it will attempt a lookup using the DNS servers specified. If the DNS servers specified aren’t reachable, it will attempt to establish the connection. You could use DNS servers that don’t exist to get a permanent always on connection, but I would not recommend that as you can’t troubleshoot easily and the non-existent servers could be created at some point by another party.</summary></entry><entry><title type="html">Windows 7 Guest In Parallels 12 Not Using Host VPN DNS Servers</title><link href="http://localhost:4000/windows-7-guest-in-parallels-12-not/" rel="alternate" type="text/html" title="Windows 7 Guest In Parallels 12 Not Using Host VPN DNS Servers" /><published>2017-01-10T18:25:00-06:00</published><updated>2017-01-10T18:25:00-06:00</updated><id>http://localhost:4000/windows-7-guest-in-parallels-12-not</id><content type="html" xml:base="http://localhost:4000/windows-7-guest-in-parallels-12-not/">&lt;p&gt;There seems to be a glitch with the virtual machine not getting the proper settings from the network even when all of the settings are configured on the host and in Parallels. If you follow these steps below it should get you up and running.&lt;!--more--&gt;&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;Log in to the virtual machine.&lt;/li&gt;
@@ -405,9 +510,9 @@ https://github.com/Nesteph/LW-Changer&lt;/p&gt;</content><author><name>Steve McM
 &lt;p&gt;Next, we need to add an expression or rule to match off of. The expression we are going to build is an &lt;strong&gt;Advanced content match,&lt;/strong&gt; the Location is &lt;strong&gt;Any envelop recipient&lt;/strong&gt;, and the Match type is &lt;strong&gt;Matches regex&lt;/strong&gt;. Once these options are selected, the logic behind the filter can be filled in and tested. In the Regexp field, enter one of the following styles and then hit Save. Repeat as necessary for your lists.&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;^[0-9][0-9]@domain.com&lt;/code&gt; - All emails in the form of &lt;em&gt;@domain.com&lt;/em&gt; trigger the rule.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;^[0-9][0-9]@domain.(com|org|k12.edu)&lt;/code&gt; - All emails in the form of &lt;em&gt;@domain.com&lt;/em&gt;, &lt;em&gt;@domain.org&lt;/em&gt;, or &lt;em&gt;@domain.k12.edu&lt;/em&gt; trigger the rule.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;^[0-9][0-9]@(example|domain).com&lt;/code&gt; - All emails in the form of &lt;em&gt;@example.com&lt;/em&gt; or &lt;em&gt;@domain.com&lt;/em&gt; trigger the rule.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;^[0-9][0-9]@domain.com&lt;/code&gt; - All emails in the form of &lt;em&gt;@domain.com&lt;/em&gt; trigger the rule.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;^[0-9][0-9]@domain.(com|org|k12.edu)&lt;/code&gt; - All emails in the form of &lt;em&gt;@domain.com&lt;/em&gt;, &lt;em&gt;@domain.org&lt;/em&gt;, or &lt;em&gt;@domain.k12.edu&lt;/em&gt; trigger the rule.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;^[0-9][0-9]@(example|domain).com&lt;/code&gt; - All emails in the form of &lt;em&gt;@example.com&lt;/em&gt; or &lt;em&gt;@domain.com&lt;/em&gt; trigger the rule.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;figure style=&quot;float:center&quot;&gt;
@@ -415,10 +520,10 @@ https://github.com/Nesteph/LW-Changer&lt;/p&gt;</content><author><name>Steve McM
 	&lt;figcaption&gt;Testing the Regexp to make sure it works&lt;/figcaption&gt;
 &lt;/figure&gt;
 
-&lt;p&gt;This can be built out to your specific setup easily with the use of &lt;strong&gt;OR&lt;/strong&gt; logic by using &lt;code class=&quot;highlighter-rouge&quot;&gt;(phrase 1|phrase 2|phrase 3)&lt;/code&gt; to substitute multiple items in the same rule. An example Regexp that catches all email to your student lists could be something along the following (this is assuming that you have these groups set up with the appropriate grades as members in them):&lt;/p&gt;
+&lt;p&gt;This can be built out to your specific setup easily with the use of &lt;strong&gt;OR&lt;/strong&gt; logic by using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(phrase 1|phrase 2|phrase 3)&lt;/code&gt; to substitute multiple items in the same rule. An example Regexp that catches all email to your student lists could be something along the following (this is assuming that you have these groups set up with the appropriate grades as members in them):&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;^(hs|ms|is|es)-students@(domain1.k12.edu|domain2.k12.edu)&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;^(hs|ms|is|es)-students@(domain1.k12.edu|domain2.k12.edu)&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;This would trigger on the following addresses on both domain1.k12.edu and domain2.k12.edu:&lt;/p&gt;
@@ -438,7 +543,7 @@ https://github.com/Nesteph/LW-Changer&lt;/p&gt;</content><author><name>Steve McM
 
 &lt;p&gt;Congratulations! All the accounts in the OU (and sub-OUs) that you applied this to, should no longer be able to email the lists you specified. The added bonus of this is that as you add additional OUs/Groups with that numbering scheme, you won’t need to modify this rule as they will automatically be restricted from emailing that list.&lt;/p&gt;
 
-&lt;p&gt;&lt;span style=&quot;font-size: x-small;&quot;&gt;&lt;strong&gt;Note:&lt;/strong&gt; I still need to test whether the ^ (signifies that the expression must begin with the following phrase) is necessary. I believe it is as &lt;a href=&quot;https://support.google.com/a/answer/1346934?hl=en&quot;&gt;Google’s documentation&lt;/a&gt; states that Any envelope recipient compares against the rule one at a time and you don’t want emails sent to roger09@domain.com from someone in the OUs getting rejected. Google’s Regexp documentation &lt;a href=&quot;https://support.google.com/a/answer/1346938?hl=en&quot;&gt;here&lt;/a&gt;.&lt;/span&gt;&lt;/p&gt;</content><author><name>Steve McMillin</name></author><category term="[&quot;Work&quot;]" /><category term="Gmail" /><category term="Google Apps" /><category term="OU" /><category term="Restricted Emails" /><category term="Google Groups" /><category term="Google Admin Console" /><summary type="html">Recently I was tasked with figuring out a way to limit our student accounts from being able to send emails out to a large portion of our mailing lists/groups. The first option, blocking all emails except from owners and managers of the groups worked out great! Except they were the only users that could email those lists. Not a great fit, but do-able.</summary></entry><entry><title type="html">You’re up and running!</title><link href="http://localhost:4000/Hello-World/" rel="alternate" type="text/html" title="You're up and running!" /><published>2014-03-03T00:00:00-06:00</published><updated>2014-03-03T00:00:00-06:00</updated><id>http://localhost:4000/Hello-World</id><content type="html" xml:base="http://localhost:4000/Hello-World/">&lt;p&gt;Next you can update your site name, avatar and other options using the _config.yml file in the root of your repository (shown below).
+&lt;p&gt;&lt;span style=&quot;font-size: x-small;&quot;&gt;&lt;strong&gt;Note:&lt;/strong&gt; I still need to test whether the ^ (signifies that the expression must begin with the following phrase) is necessary. I believe it is as &lt;a href=&quot;https://support.google.com/a/answer/1346934?hl=en&quot;&gt;Google’s documentation&lt;/a&gt; states that Any envelope recipient compares against the rule one at a time and you don’t want emails sent to roger09@domain.com from someone in the OUs getting rejected. Google’s Regexp documentation &lt;a href=&quot;https://support.google.com/a/answer/1346938?hl=en&quot;&gt;here&lt;/a&gt;.&lt;/span&gt;&lt;/p&gt;</content><author><name>Steve McMillin</name></author><category term="[&quot;Work&quot;]" /><category term="Gmail" /><category term="Google Apps" /><category term="OU" /><category term="Restricted Emails" /><category term="Google Groups" /><category term="Google Admin Console" /><summary type="html">Recently I was tasked with figuring out a way to limit our student accounts from being able to send emails out to a large portion of our mailing lists/groups. The first option, blocking all emails except from owners and managers of the groups worked out great! Except they were the only users that could email those lists. Not a great fit, but do-able.</summary></entry><entry><title type="html">You’re up and running!</title><link href="http://localhost:4000/Hello-World/" rel="alternate" type="text/html" title="You’re up and running!" /><published>2014-03-03T00:00:00-06:00</published><updated>2014-03-03T00:00:00-06:00</updated><id>http://localhost:4000/Hello-World</id><content type="html" xml:base="http://localhost:4000/Hello-World/">&lt;p&gt;Next you can update your site name, avatar and other options using the _config.yml file in the root of your repository (shown below).
 &lt;!--more--&gt;
 &lt;img src=&quot;/images/config.png&quot; alt=&quot;_config.yml&quot; /&gt;&lt;/p&gt;
 
